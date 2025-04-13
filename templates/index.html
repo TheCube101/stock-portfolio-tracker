@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock Search</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='loader.css') }}">
     <script src="{{ url_for('static', filename='scripts.js') }}"></script>
 </head>
 <body>
@@ -16,6 +17,8 @@
         <div class="buttons" onclick="clearResults()">Clear Results</div>
     </div>
 
-    <div id="results"></div>
+    <div id="results">
+        {% include 'loader.html' %}
+    </div>
 </body>
 </html>

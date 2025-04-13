@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='charts.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <script src="{{ url_for('static', filename='chart.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
     <title>Test</title>
 </head>
 <body>
@@ -27,12 +28,11 @@
         <h2 class="stockTicker">{{ stock_ticker }}</h2>
         <canvas id="preview" class="canvas"></canvas>
         <div class="options">
-            <div class="current-price">price</div>
-            <input type="text" class="input-amount" placeholder="Amount">
-            <div class="buy-date-select">
-                date <img src="{{ url_for('static', filename='image/calendar.png') }}" alt="calendar icon">
-            </div>
-            <div class="cost">cost</div>
+            <div class="current-price">{{ current_price }} {{ stock_currency }}</div>
+            <input id="amountInput"  type="number" class="input-amount" placeholder="Amount">
+
+            <input id="buy_date" class="buy-date-select" type="date" min="{{ min_date }}" max="{{ max_date }}">
+            <div class="cost" data-currency="{{ stock_currency }}"> 0 {{ total_cost }} {{ stock_currency }}</div>
             <div class="add-button">+ add</div>
         </div>
     </div>    

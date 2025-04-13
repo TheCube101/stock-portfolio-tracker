@@ -229,7 +229,8 @@ a:hover {
 
 .cost {
     margin-left: auto;
-    width: 100px;
+    width: auto;
+    
     height: 40px;
     padding: 0 5px;
     border-radius: 10px;
@@ -241,3 +242,10 @@ a:hover {
     transition: 0.4s;
     flex-shrink: 0; 
 }
+
+.buy-date-select {
+    border: 1px solid #ccc;
+    width: 150px; /* Adjust as needed */
+    height: 40px;
+}
+
