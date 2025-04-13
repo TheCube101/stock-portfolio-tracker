@@ -1,0 +1,3 @@
+For this i have installed following fonts:
+
+- poppins --- link: https://befonts.com/poppins-font-family.html <--- note that i use the Poppins-Black.ttf 

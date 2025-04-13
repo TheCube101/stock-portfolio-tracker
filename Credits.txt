@@ -1,0 +1,1 @@
+Graphs template by "Made with Chart.js by Sven Hofmann." -> https://hofmannsven.com/ 

@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+body {
+    font-family: "Poppins", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 1rem;
+    background-color: #fafafa;
+    color: #506678;
+    padding: 15px;
+}
+
+.wrapper {
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+    border-radius: 50px;
+    background: #ededed;
+    box-shadow:  20px 20px 60px #bebebe,
+                -20px -20px 60px #ffffff;
+    padding: 30px;
+    }
+
+.canvas {
+    position: relative;
+    width: 20%;
+}
+
+.note {
+    width: 100%;
+    float: left;
+    text-align: center;
+    padding: 15px 0;
+}
+
+a {
+    text-decoration: none;
+    color: #506678;
+    border-bottom: 1px solid rgba(80, 102, 120, 0.25);
+    transition: all 0.35s;
+}
+
+a:hover {
+    color: #677f93;
+    border-bottom: 1px solid rgba(149, 76, 233, 0.5);
+}
+
+@media (min-width: 960px) {
+    body {
+        padding: 25px;
+    }
+
+    .note {
+        padding: 25px 0;
+    }
+}
+
+.button-container {
+    display: flex;
+    align-items: center;  
+    flex-wrap: nowrap;
+    gap: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.time-buttons,
+.date-button {
+    height: 40px;        
+    padding: 0 10px;
+    border-radius: 10px;
+    background: #4036c832;
+    box-shadow: 8px 8px 9px #29265941, -8px -8px 9px #332e6d18;
+    display: flex;
+    align-items: center;    
+    justify-content: center;
+    transition: 0.4s;
+    flex-shrink: 0;
+}
+
+.time-buttons {
+    min-width: 60px;
+}
+
+.time-buttons:hover,
+.date-button:hover {
+    background-color: #4036c860;
+    cursor: pointer;
+}
+
+.date-button {
+    width: 40px;
+    margin-left: auto;  
+}
+
+.date-button img {
+    height: 24px;
+    width: 24px;
+}
+
+.buy-date-select {
+    width: 70px;
+    height: 40px;        
+    padding: 0 10px;
+    border-radius: 10px;
+    background: #4036c832;
+    box-shadow: 8px 8px 9px #29265941, -8px -8px 9px #332e6d18;
+    display: flex;
+    align-items: center;    
+    justify-content: center;
+    transition: 0.4s;
+    flex-shrink: 0; 
+}
+
+.buy-date-select img {
+    margin-left: 5px;
+    height: 24px;
+    width: 24px;
+}
+
+.buy-date-select:hover {
+    cursor: pointer;
+    background-color: #4036c860;
+}
+
+.options {
+    display: flex;
+    align-items: center;  
+    flex-wrap: nowrap;
+    gap: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.remove, 
+.sell {
+    height: 40px;        
+    padding: 0 10px;
+    border-radius: 10px;
+    background: #c83636aa;
+    box-shadow: 8px 8px 9px #59262641, -8px -8px 9px #6d2e2e18;
+    display: flex;
+    align-items: center;    
+    justify-content: center;
+    transition: 0.4s;
+    flex-shrink: 0;
+}
+
+.remove:hover, 
+.sell:hover {
+    background-color: #c83636cf;
+    cursor: pointer;
+}
+
+.buy-date, .gain_loss-color, .gain_loss-color, .current-price, .daily_gain, .amount {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    background: #fafafa;
+    box-shadow: inset 8px 8px 9px #e1e1e1,
+                inset -8px -8px 9px #f7f7f7;
+}
+
+.add-button {
+    width: 70px;
+    height: 40px;        
+    padding: 0 10px;
+    border-radius: 10px;
+    background: #6be632ac;
+    box-shadow: 8px 8px 9px #5c5c5c26, -8px -8px 9px #c5c5c516;
+    display: flex;
+    align-items: center;    
+    justify-content: center;
+    transition: 0.4s;
+    flex-shrink: 0; 
+}
+
+.add-button:hover {
+    cursor: pointer;
+    background-color: #63d42eac;
+}
+
+.input-amount { 
+    text-align: center;
+    height: 40px;
+    width: 100px;
+    border-radius: 20px;
+    border-style: None;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    background: #fafafa;
+    box-shadow: inset 8px 8px 9px #e1e1e1,
+                inset -8px -8px 9px #f7f7f7;
+}
+
+.back {
+    font-size: 50px;
+    margin-bottom: 30px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    background: #fafafa;
+    box-shadow: 8px 8px 9px #59262641, -8px -8px 9px #6d2e2e18;
+    transition: 0.4s;
+}
+
+.back:hover {
+    cursor: pointer;
+    background-color: #d3d3d3;
+}
+.stockName{
+    margin-bottom: -20px;
+}
+
+.stockTicker {
+    font-size: small;
+    opacity: 0.7;
+}
+
+.cost {
+    margin-left: auto;
+    width: 100px;
+    height: 40px;
+    padding: 0 5px;
+    border-radius: 10px;
+    background: #fafafa;
+    box-shadow: inset 8px 8px 9px #e1e1e1,inset -8px -8px 9px #f7f7f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.4s;
+    flex-shrink: 0; 
+}

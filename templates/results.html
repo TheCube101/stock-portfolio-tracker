@@ -1,0 +1,27 @@
+{% if tickers %}
+<script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <div class="master">
+        {% for ticker, name, stockPrice, stockCurrency in tickers %}
+            <div class="searchResults">
+                <div class="container">
+                    <span class="stockTicker"> {{ ticker }} </span> 
+                    <span class="stockName"> {{ name }} </span>
+                    <span class="stockPrice"> 
+                        {{ stockPrice }} {{ stockCurrency if stockCurrency != "Unknown" else "" }} 
+                    </span>
+                </div>
+                <div>
+                    <button 
+                        class="registerStock" 
+                        data-ticker="{{ ticker }}" 
+                        data-price="{{ stockPrice }}"
+                        stock-name="{{ name }} ">
+                        + add
+                    </button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No matching stocks found.</p>
+{% endif %}

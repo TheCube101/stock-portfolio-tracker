@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</head>
+<body>
+
+    <h1>Stock Portfolio</h1>
+    <div>
+        <input type="text" id="searchBox" placeholder="Enter company name...">
+        <div class="buttons" onclick="submitQuery()">Search</div>
+        <div class="buttons" onclick="clearResults()">Clear Results</div>
+    </div>
+
+    <div id="results"></div>
+</body>
+</html>
