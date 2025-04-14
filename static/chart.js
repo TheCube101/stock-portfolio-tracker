@@ -17,8 +17,9 @@ const colors = {
     }
 };
   
-const weight = [61.0, 60.2, 59.1, 61.4, 59.9, 60.2, 59.8, 60.8, 59.6, 61.2];
-const labels = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7", "Week 8", "Week 9", "Week 10"];
+const weight = [11.204, 13.675, 12.736, 16.182, 17.757, 29.058, 25.296, 12.202, 19.304, 25.896, 24.045, 34.054, 46.565, 54.023, 88.107, 71.999, 45.325, 53.906, 85.365, 150.462, 392.69];
+const labels =   ['01-01-2000 00:00', '01-04-2001 00:00', '01-07-2002 00:00', '01-10-2003 00:00', '01-01-2005 00:00', '01-04-2006 00:00', '01-07-2007 00:00', '01-10-2008 00:00', '01-01-2010 00:00', '01-04-2011 00:00', '01-07-2012 00:00', '01-10-2013 00:00', '01-01-2015 00:00', '01-04-2016 00:00', '01-07-2017 00:00', '01-10-2018 00:00', '01-01-2020 00:00', '01-04-2021 00:00', '01-07-2022 00:00', '01-10-2023 00:00', '01-01-2025 00:00'];
+const currency = "USD"
 
 const trendColor = weight[0] > weight[weight.length - 1] ? colors.red : colors.blue;
 
@@ -74,7 +75,7 @@ window.onload = function () {
         yAxes: [{
           scaleLabel: {
             display: true,
-            labelString: "Price in {{ curency }}",
+            labelString: "Price in " + currency,
             padding: 10,
             fontFamily: "'Poppins', sans-serif"  // <- Apply font to axis label
           },
@@ -148,7 +149,7 @@ window.onload = function () {
         yAxes: [{
           scaleLabel: {
             display: true,
-            labelString: "Price in {{ curency }}",
+            labelString: "Price in " + currency,
             padding: 10,
             fontFamily: "'Poppins', sans-serif"  // <- Apply font to axis label
           },
@@ -156,8 +157,8 @@ window.onload = function () {
           ticks: {
             fontFamily: "'Poppins', sans-serif",  // <- Apply font to y-axis ticks
             beginAtZero: false,
-            max: 63,
-            min: 57,
+            max: 471.22,
+            min: 9.33,
             padding: 10
           }
         }]

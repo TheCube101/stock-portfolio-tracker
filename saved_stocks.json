@@ -1,0 +1,14 @@
+{
+    "Novo Nordisk A/S": [
+        {
+            "Stock_Ticker": "NOVO-B.CO",
+            "Stock_Name": "Novo Nordisk A/S",
+            "Start_Stock_Price": "409.55",
+            "Total_Price": 409.55,
+            "Currency_Name": "DKK",
+            "Currency_Symbol": "kr",
+            "Buy_Date": "2025-04-10",
+            "Amount": 1
+        }
+    ]
+}

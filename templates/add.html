@@ -10,7 +10,7 @@
     <title>Test</title>
 </head>
 <body>
-    <div class="back">🢀</div>
+    <div onclick=window.location.href="{{ url_for('index') }}" class="back">🢀</div>
     <div class="wrapper">
         <div class="button-container">
             <div class="time-buttons">1 W</div>
@@ -25,15 +25,17 @@
             </div>
         </div>
         <h1 class="stockName">{{ stock_name }}</h1>
-        <h2 class="stockTicker">{{ stock_ticker }}</h2>
+        <h2 id="stock_ticker" class="stockTicker">{{ stock_ticker }}</h2>
         <canvas id="preview" class="canvas"></canvas>
         <div class="options">
             <div class="current-price">{{ current_price }} {{ stock_currency }}</div>
-            <input id="amountInput"  type="number" class="input-amount" placeholder="Amount">
+            <input id="amountInput"  type="number" class="input-amount" placeholder="Amount", value="0">
 
             <input id="buy_date" class="buy-date-select" type="date" min="{{ min_date }}" max="{{ max_date }}">
             <div class="cost" data-currency="{{ stock_currency }}"> 0 {{ total_cost }} {{ stock_currency }}</div>
-            <div class="add-button">+ add</div>
+            <div class="add-button"
+            onclick=window.location.href="{{ url_for('index') }}"
+            >+ add</div>
         </div>
     </div>    
 </body>

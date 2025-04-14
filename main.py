@@ -67,23 +67,22 @@ def loader():
 @app.route("/register_stock", methods=["POST"])
 def register_stock():
     stock_ticker = request.form.get("ticker")
-    stock_price = request.form.get("stockPrice")
     stock_name = request.form.get("stockName")
 
     stock = yf.Ticker(stock_ticker)
     stock_info = stock.info
     stock_currency = stock_info.get("currency", "Unknown")
     
-    print(f"Registering stock: {stock_ticker}, {stock_price}, {stock_name}, {stock_currency}")
+    # print(f"Registering stock: {stock_ticker}, {stock_price}, {stock_name}, {stock_currency}")
     return jsonify({ 
-    "redirect": url_for("add_stock", stock_name=stock_name, stock_ticker=stock_ticker)
+    "redirect": url_for("manage_stock", stock_name=stock_name, stock_ticker=stock_ticker, stock_currency=stock_currency)
     })
     
 app.secret_key = 'super-secret-key' 
 
 
-@app.route('/add_stock', methods=['GET', 'POST'])
-def add_stock():
+@app.route('/manage_stock', methods=['GET', 'POST'])
+def manage_stock():
     stock_name = request.args.get("stock_name", "Unknown Stock")
     stock_ticker = request.args.get("stock_ticker", "Unknown Ticker")
 
@@ -108,17 +107,27 @@ def add_stock():
                            min_date=min_date, max_date=max_date,
                            current_price=current_price, stock_currency=curency_symbol)
 
+
 @app.route('/send_date', methods=['POST'])
 def receive_date():
     data = request.get_json()
     if not data or 'buy_date' not in data:
         return jsonify({"error": "Invalid JSON or missing 'buy_date'"}), 400
-    
-    buy_date = data['buy_date']
-    print("Received buy_date:", buy_date)
-    return jsonify({"message": "Date received", "buy_date": buy_date}), 200
 
-#=========================Update curent price next time working on this ===============================#
+    stock_ticker = data.get('stock_ticker')
+    buy_date = data['buy_date']
+    stock = yf.Ticker(stock_ticker)
+
+    try:
+        price = stock.history(start=buy_date, period="1d")["Close"].iloc[0]
+        return jsonify({
+            "message": "Date received",
+            "buy_date": buy_date,
+            "price": round(price, 2)
+        }), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 @app.route('/update_amount', methods=['POST'])
 def update_amount():
@@ -129,7 +138,7 @@ def update_amount():
 
     try:
         amount = int(raw_amount)
-        total_cost = amount * current_price if amount > 0 else 0  # Force 0 if amount ≤ 0
+        total_cost = round((amount * current_price), 3) if amount > 0 else 0  # Force 0 if amount ≤ 0
     except (ValueError, TypeError):
         total_cost = 0  # Force 0 on invalid input
     
@@ -137,17 +146,25 @@ def update_amount():
         "total_cost": total_cost  # Always returns a number (never undefined/null)
     })
 
-"""@app.route("/add_stock", methods=["POST"])
+@app.route("/add_stock", methods=["POST"])
 def add_stock():
-    ticker = request.form.get("ticker")
-    stock_price = request.form.get("stockPrice")
-    stock_name = request.form.get("stockName")
+    data = request.get_json()
+    
+    amount = int(data.get('amount'))
+    buy_date = data.get('buy_date')
+    current_price = data.get('current_price')
+    stock_currency = data.get('stock_currency')
+    total_cost = round((float(current_price) * amount), 3)
+    stock_ticker = data.get('stock_ticker')
+    stock = yf.Ticker(stock_ticker)
+    stock_name = stock.info['longName']
+    
+    # Process your data here
+    
+    Currency_Name = next(key for key, value in currency.items() if value == stock_currency)
 
-    stock = yf.Ticker(ticker)
-    stock_info = stock.info
-    stock_currency = stock_info.get("currency", "Unknown")
-
-    print(ticker, stock_price, stock_name, stock_currency)
+    if buy_date == '':
+        buy_date = dt.datetime.today().strftime('%Y-%m-%d')
 
     if os.path.exists("saved_stocks.json"):
         with open("saved_stocks.json", "r") as file:
@@ -157,22 +174,28 @@ def add_stock():
                 saved_stocks = {}
     else:
         saved_stocks = {}
-
+        
     if stock_name not in saved_stocks:
         saved_stocks[stock_name] = []
-
-
-    if not any(stock['Ticker'] == ticker for stock in saved_stocks[stock_name]):
+    
+    
+    if not any(stock['Stock_Ticker'] == stock_ticker for stock in saved_stocks[stock_name]):
         saved_stocks[stock_name].append({
-            "Ticker": ticker,
-            "Start_Stock_Price": stock_price,
-            "Stock_currency": stock_currency,
+            "Stock_Ticker": stock_ticker,
+            "Stock_Name": stock_name,
+            "Start_Stock_Price": current_price,
+            "Total_Price": float(total_cost),
+            "Currency_Name": Currency_Name,
+            "Currency_Symbol": stock_currency,
+            "Buy_Date": buy_date,
+            "Amount": amount,
         })
     
     with open("saved_stocks.json",'w') as file:
         json.dump(saved_stocks, file, indent=4)
     
-    return jsonify({"success": True, "message": f"{ticker} added successfully"})"""
+    return jsonify({'status': 'success', 'message': 'Data received'})
+
 
 if __name__ == "__main__":
     app.run(debug=True)

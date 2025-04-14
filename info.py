@@ -40,7 +40,7 @@ currency = {
     "GGP": "GG£",
     "GYD": "GY$",
     "HNL": "L",
-    "HKD": "$",
+    "HKD": "HK$",
     "HUF": "Ft",
     "ISK": "SIK",
     "INR": "INR",

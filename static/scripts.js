@@ -75,76 +75,126 @@ document.addEventListener("click", function(event) {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-    const input = document.getElementById("amountInput");
-
-    if (input) {
-        input.addEventListener("input", function () {
-            const amount = this.value;
-
-            fetch('/update_amount', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ amount: amount })
-            })
-            .then(response => response.json())
-            .then(data => {
-                const costDiv = document.querySelector(".cost");
-                if (costDiv) {
-                    // Get the currency symbol from data-attribute
-                    const currency = costDiv.getAttribute("data-currency");
-                    // Update only the numeric part, preserving currency
-                    costDiv.textContent = `${data.total_cost} ${currency}`;
-                }
-            })
-            .catch(err => console.error('Fetch error:', err));
-        });
-    }
-});
-
-document.addEventListener("DOMContentLoaded", function () {
     const dateInput = document.getElementById("buy_date");
+    const stockTickerElement = document.getElementById("stock_ticker");
+    const amountInput = document.getElementById("amountInput");
+    const costDiv = document.querySelector(".cost");
+    const priceDiv = document.querySelector(".current-price");
 
-    dateInput.addEventListener("change", function () {
-        const buyDate = dateInput.value;
+    if (!dateInput || !stockTickerElement || !amountInput || !costDiv || !priceDiv) return;
+
+    const stockTicker = stockTickerElement.textContent.trim();
+    
+    // Step 1: Initialize the price if it's already available in sessionStorage or set to 0
+    let currentPrice = parseFloat(sessionStorage.getItem("current_price")) || 0;
+    
+    // If currentPrice is already set, update the price display and cost right away
+    if (currentPrice > 0) {
+        const currency = priceDiv.textContent.trim().split(" ").pop(); // Extract currency symbol
+        priceDiv.textContent = `${currentPrice} ${currency}`;
+        updateCost(currentPrice); // Update the cost immediately with the available price
+    }
+
+    // Step 2: Fetch the price when the buy_date is changed
+    dateInput.addEventListener("change", (e) => {
+        const buyDate = e.target.value;
 
         fetch("/send_date", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ buy_date: buyDate })
+            body: JSON.stringify({
+                buy_date: buyDate,
+                stock_ticker: stockTicker
+            })
         })
         .then(response => response.json())
         .then(data => {
-            console.log("Date sent successfully:", data);
+            if (data.price) {
+                currentPrice = data.price; // Store the new price
+                const currency = priceDiv.textContent.trim().split(" ").pop(); // Extract currency symbol
+                priceDiv.textContent = `${data.price} ${currency}`;
+
+                // Store the new price in sessionStorage for future use
+                sessionStorage.setItem("current_price", currentPrice);
+                
+                // Update the cost based on the new price
+                updateCost(currentPrice);
+            } else if (data.error) {
+                priceDiv.textContent = `Error: ${data.error}`;
+            }
         })
+        .catch(err => {
+            console.error("Error fetching price:", err);
+        });
+    });
+
+    // Step 3: Calculate and update the cost when the amount is entered
+    amountInput.addEventListener("input", () => {
+        const amount = parseFloat(amountInput.value) || 0;
+    
+        fetch("/update_amount", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ amount })
+        })
+        .then(res => res.json())
+        .then(data => {
+            const currency = costDiv.dataset.currency || "";
+            costDiv.textContent = `${data.total_cost} ${currency}`;
+        })
+        .catch(err => {
+            console.error("Error updating amount:", err);
+        });
+    });
+
+    // Function to update the cost
+    function updateCost(currentPrice) {
+        const amount = parseFloat(amountInput.value) || 0; // Ensure the value is a valid number, default to 0
+        const totalCost = (amount * currentPrice).toFixed(2); // Calculating total cost
+        const currency = costDiv.dataset.currency || "";
+
+        // Update the cost display
+        costDiv.textContent = `${totalCost} ${currency}`;
+    }
+});
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.add-button').addEventListener('click', () => {
+        console.log("Button clicked!"); // Test if this appears
+        // Extract values from HTML elements
+        const amount = document.getElementById('amountInput').value;
+        const buyDate = document.getElementById('buy_date').value;
+        const currentPrice = document.querySelector('.current-price').textContent.split(' ')[0]; // Extract just the number
+        const stockCurrency = document.querySelector('.cost').getAttribute('data-currency');
+        const stockTicker = document.getElementById('stock_ticker').textContent;
+        
+        // Prepare data to send
+        const data = {
+            amount: amount,
+            buy_date: buyDate,
+            current_price: currentPrice,
+            stock_currency: stockCurrency,
+            stock_ticker: stockTicker
+        };
+
+        // Send to Flask using Fetch API (AJAX)
+        fetch('/add_stock', {  // This should match your Flask route
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
         .catch(error => {
-            console.error("Error sending date:", error);
+            console.error('Error:', error);
+            alert('Failed to send data.');  // Optional: Show error message
         });
     });
 });
-
-//document.addEventListener("click", function(event) {
-//    if (event.target.classList.contains("addStock")) {
-//        let ticker = event.target.getAttribute("data-ticker");
-//        let stockPrice = event.target.getAttribute("data-price");
-//        let stockName = event.target.getAttribute("stock-name");
-//        // console.log("Sending:", ticker, stockPrice); // Optional debug
-//
-//        fetch("/add_stock", {
-//            method: "POST",
-//            headers: {
-//                "Content-Type": "application/x-www-form-urlencoded"
-//            },
-//            body: new URLSearchParams({
-//                ticker: ticker,
-//                stockPrice: stockPrice,
-//                stockName: stockName
-//            })
-//        })
-//        .then(response => response.json())
-//        .then(data => console.log(data.message))
-//        .catch(error => console.error("Error adding stock:", error));
-//    }
-//});
-
