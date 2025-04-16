@@ -47,9 +47,29 @@ def search_stock(partial_name):
     return tickers_info
 
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET"])
 def index():
-    return render_template("index.html")
+    # Load the saved stocks data
+    with open("saved_stocks.json", "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    # Parse the stocks
+    stocks = [
+        (
+            item["Stock_Ticker"],
+            item["Stock_Name"],
+            item["Start_Stock_Price"],
+            item["Total_Price"],
+            item["Currency_Name"],
+            item["Currency_Symbol"],
+            item["Buy_Date"],
+            item["Amount"]
+        )
+        for entries in data.values() for item in entries
+    ]
+
+    # print("Parsed stocks for index:", stocks)  # Debugging
+    return render_template("index.html", stocks=stocks)
 
 
 @app.route("/search", methods=["POST"])
@@ -195,7 +215,6 @@ def add_stock():
         json.dump(saved_stocks, file, indent=4)
     
     return jsonify({'status': 'success', 'message': 'Data received'})
-
 
 if __name__ == "__main__":
     app.run(debug=True)

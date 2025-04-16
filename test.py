@@ -3,8 +3,9 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 import pprint
+import json
 
-stock = yf.Ticker('SAAB-B.ST')
+"""stock = yf.Ticker('SAAB-B.ST')
 history_df = stock.history(period='max')
 first_date = history_df.index[0]
 today = pd.Timestamp.now(tz=first_date.tz)
@@ -49,4 +50,26 @@ for label, (days, sample, interval) in timeframes.items():
         "labels": labels_list,
         "min": min_val,
         "max": max_val
-    })
+    })"""
+
+with open("saved_stocks.json", "r", encoding="utf-8") as f:
+    data = json.load(f)
+
+stocks = [(
+        item["Stock_Ticker"],
+        item["Stock_Name"],
+        item["Start_Stock_Price"],
+        item["Total_Price"],
+        item["Currency_Name"],
+        item["Currency_Symbol"],
+        item["Buy_Date"],
+        item["Amount"]
+    )
+    for entries in data.values()
+    for item in entries
+]
+
+print(stocks)
+
+if stocks:
+    print("true")

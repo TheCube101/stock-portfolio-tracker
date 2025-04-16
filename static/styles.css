@@ -92,10 +92,28 @@ th, td {
     padding-right: 40vw;
     overflow: hidden;
     white-space: nowrap; 
+    margin-top: 15px;
+}
+
+.stockTicker-graph {
+    font-size: small;
+    text-align: left;
+    padding-right: 40vw;
+    overflow: hidden;
+    white-space: nowrap; 
+    margin-top: -20px;
 }
 
 .stockName {
     font-size: 0.8em;
+    color: #666;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap; 
+}
+
+.stockName-graph {
+    font-size: 2em;
     color: #666;
     text-align: left;
     overflow: hidden;
@@ -108,6 +126,7 @@ th, td {
     font-style: italic;
     font-style: bold;
     text-align: left;
+    margin-top: 20px;
 }
 
 .registerStock {

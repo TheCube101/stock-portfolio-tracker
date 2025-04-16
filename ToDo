@@ -1,0 +1,20 @@
+# Portfolio manager
+- Ability to add multiple portfolios
+    - Name
+
+# Stock Cards
+- Check if saved_stocks.json is empty
+- Get the current price for the current-price div
+- Format buy-date to local time reffrence
+- Get all-time profit on cirtain stock
+
+# Portfolio master stats
+- Get all time net profit
+- Get current protfolio value
+- Get a list of all stocks - "name"
+- Graph of progression
+- List of best performing stocks in order 
+
+# Settings
+- darkmode
+

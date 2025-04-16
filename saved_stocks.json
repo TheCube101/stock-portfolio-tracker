@@ -10,5 +10,17 @@
             "Buy_Date": "2025-04-10",
             "Amount": 1
         }
+    ],
+    "Saab AB (publ)": [
+        {
+            "Stock_Ticker": "SAAB-B.ST",
+            "Stock_Name": "Saab AB (publ)",
+            "Start_Stock_Price": "249.31",
+            "Total_Price": 1495.86,
+            "Currency_Name": "SEK",
+            "Currency_Symbol": "SEK",
+            "Buy_Date": "2024-05-27",
+            "Amount": 6
+        }
     ]
 }

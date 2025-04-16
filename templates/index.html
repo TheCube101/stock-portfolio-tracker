@@ -6,7 +6,8 @@
     <title>Stock Search</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='loader.css') }}">
-    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='charts.css') }}">
+
 </head>
 <body>
 
@@ -18,5 +19,9 @@
     </div>
 
     <div id="results"></div>
+    <!-- Render the stocks directly from the passed context -->
+    <div id="stocks">
+        {% include 'stocks.html' %}
+    </div>
 </body>
 </html>
