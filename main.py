@@ -47,11 +47,29 @@ def search_stock(partial_name):
     return tickers_info
 
 
-@app.route("/", methods=["GET"])
-def index():
-    # Load the saved stocks data
-    with open("saved_stocks.json", "r", encoding="utf-8") as f:
-        data = json.load(f)
+def current_price(stock_ticker):
+    # load the stock
+    stock = yf.Ticker(stock_ticker)
+    history_df = stock.history()
+    price_df = history_df['Close']
+    first_date = round(price_df.iloc[0], 3) # use iloc for positional arguments
+    return first_date
+
+def current_profit(start_price, current_price, amount):
+    profit = float(start_price) - float(current_price) * int(amount)
+    return profit
+
+def load_saved_stocks():
+    if not os.path.exists("saved_stocks.json"):
+        return []
+
+    try:
+        with open("saved_stocks.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+            if not data:
+                return []
+    except (json.JSONDecodeError, FileNotFoundError):
+        return []
 
     # Parse the stocks
     stocks = [
@@ -68,8 +86,29 @@ def index():
         for entries in data.values() for item in entries
     ]
 
-    # print("Parsed stocks for index:", stocks)  # Debugging
-    return render_template("index.html", stocks=stocks)
+    current_price_val_dict = {}
+    for stock in stocks:
+        ticker = stock[0]
+        current_price_value = current_price(ticker)
+        current_price_val_dict[ticker] = current_price_value
+
+    current_profit_val_dict = {}
+    for stock in stocks:
+        ticker = stock[0]  # Use the stock ticker as the key
+        amount = stock[7]
+        current_profit_value = current_profit(stock[2], current_price_val_dict[ticker], amount)  # Use ticker as the key
+        current_profit_val_dict[ticker] = current_profit_value
+    # Fix wrong calculation - too tired rn
+    print(current_profit_val_dict, "\n", current_price_val_dict, "\n", stock[2])
+
+    
+    return stocks, current_price_val_dict
+
+
+
+@app.route("/", methods=["GET"])
+def index():
+    return redirect(url_for("show_stocks"))
 
 
 @app.route("/search", methods=["POST"])
@@ -198,7 +237,7 @@ def add_stock():
     if stock_name not in saved_stocks:
         saved_stocks[stock_name] = []
     
-    
+    print(dt.datetime.strptime(buy_date, "%Y-%m-%d").strftime("%Y-%m-%d"))
     if not any(stock['Stock_Ticker'] == stock_ticker for stock in saved_stocks[stock_name]):
         saved_stocks[stock_name].append({
             "Stock_Ticker": stock_ticker,
@@ -207,7 +246,7 @@ def add_stock():
             "Total_Price": float(total_cost),
             "Currency_Name": Currency_Name,
             "Currency_Symbol": stock_currency,
-            "Buy_Date": buy_date,
+            "Buy_Date": dt.datetime.strptime(buy_date, "%Y-%m-%d").strftime("%d-%m-%Y"),
             "Amount": amount,
         })
     
@@ -215,6 +254,12 @@ def add_stock():
         json.dump(saved_stocks, file, indent=4)
     
     return jsonify({'status': 'success', 'message': 'Data received'})
+
+@app.route("/stocks", methods=["GET"])
+def show_stocks():
+    
+    stocks, current_price_val_dict = load_saved_stocks()
+    return render_template("index.html", stocks=stocks, current_price_val_dict=current_price_val_dict)
 
 if __name__ == "__main__":
     app.run(debug=True)

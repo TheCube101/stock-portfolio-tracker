@@ -1,26 +1,26 @@
 {
     "Novo Nordisk A/S": [
         {
-            "Stock_Ticker": "NOVO-B.CO",
+            "Stock_Ticker": "NVO",
             "Stock_Name": "Novo Nordisk A/S",
-            "Start_Stock_Price": "409.55",
-            "Total_Price": 409.55,
-            "Currency_Name": "DKK",
-            "Currency_Symbol": "kr",
-            "Buy_Date": "2025-04-10",
-            "Amount": 1
+            "Start_Stock_Price": "62.55",
+            "Total_Price": 125.1,
+            "Currency_Name": "USD",
+            "Currency_Symbol": "$",
+            "Buy_Date": "04-04-2025",
+            "Amount": 2
         }
     ],
-    "Saab AB (publ)": [
+    "NVIDIA Corporation": [
         {
-            "Stock_Ticker": "SAAB-B.ST",
-            "Stock_Name": "Saab AB (publ)",
-            "Start_Stock_Price": "249.31",
-            "Total_Price": 1495.86,
-            "Currency_Name": "SEK",
-            "Currency_Symbol": "SEK",
-            "Buy_Date": "2024-05-27",
-            "Amount": 6
+            "Stock_Ticker": "NVDA",
+            "Stock_Name": "NVIDIA Corporation",
+            "Start_Stock_Price": "123.51",
+            "Total_Price": 617.55,
+            "Currency_Name": "USD",
+            "Currency_Symbol": "$",
+            "Buy_Date": "20-07-2024",
+            "Amount": 5
         }
     ]
 }

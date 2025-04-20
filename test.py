@@ -4,6 +4,7 @@ import numpy as np
 from datetime import datetime, timedelta
 import pprint
 import json
+import os
 
 """stock = yf.Ticker('SAAB-B.ST')
 history_df = stock.history(period='max')
@@ -52,24 +53,19 @@ for label, (days, sample, interval) in timeframes.items():
         "max": max_val
     })"""
 
-with open("saved_stocks.json", "r", encoding="utf-8") as f:
-    data = json.load(f)
 
-stocks = [(
-        item["Stock_Ticker"],
-        item["Stock_Name"],
-        item["Start_Stock_Price"],
-        item["Total_Price"],
-        item["Currency_Name"],
-        item["Currency_Symbol"],
-        item["Buy_Date"],
-        item["Amount"]
-    )
-    for entries in data.values()
-    for item in entries
-]
+def current_price(stock_ticker):
+    # load the stock
+    stock = yf.Ticker(stock_ticker)
+    history_df = stock.history()
+    price_df = history_df['Close']
+    first_date = round(price_df.iloc[0], 3) # use iloc for positional arguments
+    return first_date
 
-print(stocks)
+def current_profit(start_price, current_price):
+    profit = current_price - start_price
+    return profit
 
-if stocks:
-    print("true")
+current_price = current_price('NVO')
+current_profit = current_profit(70.696, current_price)
+print(current_profit)

@@ -1,5 +1,5 @@
-{% if stocks %}
 <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+{% if stocks and stocks|length > 0 %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script src="{{ url_for('static', filename='chart.js') }}"></script>
     {% for stock in stocks %}
@@ -23,7 +23,10 @@
                 <div class="gain_loss-color">Profit ↕</div>
                 <div class="gain_loss-color">N / A%</div>
                 <div class="buy-date">{{ stock[6] }}</div> <!-- Buy Date -->
-                <div class="current-price">current price</div>
+                <div class="current-price">
+                    {{ current_price_val_dict[stock[0]] if stock[0] in current_price_val_dict}} 
+                    {{ stock[5] }}
+                </div>
                 <div class="bought-price">{{ stock[2] }} {{ stock[5] }}</div>
                 <div class="amount">{{ stock[7] }}</div> <!-- Amount -->
                 <div class="sell">Sell</div>
@@ -34,5 +37,5 @@
         </div>
     {% endfor %}
 {% else %}
-    <p>No stocks saved</p>
+    <p style="color: gray; font-style: italic;">No stocks saved.</p>
 {% endif %}
