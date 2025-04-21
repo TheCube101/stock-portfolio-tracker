@@ -6,9 +6,9 @@
 - Reload/check for new stocks everytime the page reloads/is vissible
 - Get stock charts to work
 - Check if saved_stocks.json is empty ✅
-- Get the current price for the current-price div
+- Get the current price for the current-price div ✅
 - Format buy-date to local time reffrence ✅
-- Get all-time profit on cirtain stock
+- Get all-time profit on cirtain stock ✅
 
 # Portfolio master stats
 - Get all time net profit

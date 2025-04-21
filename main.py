@@ -56,8 +56,15 @@ def current_price(stock_ticker):
     return first_date
 
 def current_profit(start_price, current_price, amount):
-    profit = float(start_price) - float(current_price) * int(amount)
-    return profit
+    profit = (float(current_price) - float(start_price)) * int(amount)
+    return round(profit, 3)
+
+def percentage_increase(start_price, current_price):
+    start_price = float(start_price)
+    current_price = float(current_price)
+    if start_price == 0:
+        return float('inf')  # Avoid division by zero
+    return round(((current_price - start_price) / start_price) * 100, 2)
 
 def load_saved_stocks():
     if not os.path.exists("saved_stocks.json"):
@@ -93,16 +100,16 @@ def load_saved_stocks():
         current_price_val_dict[ticker] = current_price_value
 
     current_profit_val_dict = {}
+    percentage_increase_val_dict = {}
     for stock in stocks:
         ticker = stock[0]  # Use the stock ticker as the key
         amount = stock[7]
         current_profit_value = current_profit(stock[2], current_price_val_dict[ticker], amount)  # Use ticker as the key
+        percentage_increase_value = percentage_increase(stock[2], current_price_val_dict[ticker])
         current_profit_val_dict[ticker] = current_profit_value
-    # Fix wrong calculation - too tired rn
-    print(current_profit_val_dict, "\n", current_price_val_dict, "\n", stock[2])
-
+        percentage_increase_val_dict[ticker] = percentage_increase_value
     
-    return stocks, current_price_val_dict
+    return stocks, current_price_val_dict, current_profit_val_dict, percentage_increase_val_dict
 
 
 
@@ -246,7 +253,7 @@ def add_stock():
             "Total_Price": float(total_cost),
             "Currency_Name": Currency_Name,
             "Currency_Symbol": stock_currency,
-            "Buy_Date": dt.datetime.strptime(buy_date, "%Y-%m-%d").strftime("%d-%m-%Y"),
+            "Buy_Date": dt.datetime.strptime(buy_date, "%Y-%m-%d").strftime("%d-%m-%y"),
             "Amount": amount,
         })
     
@@ -258,8 +265,12 @@ def add_stock():
 @app.route("/stocks", methods=["GET"])
 def show_stocks():
     
-    stocks, current_price_val_dict = load_saved_stocks()
-    return render_template("index.html", stocks=stocks, current_price_val_dict=current_price_val_dict)
+    stocks, current_price_val_dict, current_profit_val_dict, percentage_increase_val_dict = load_saved_stocks()
+    return render_template("index.html", 
+                           stocks=stocks, 
+                           current_price_val_dict=current_price_val_dict, 
+                           current_profit_val_dict=current_profit_val_dict,
+                           percentage_increase_val_dict=percentage_increase_val_dict)
 
 if __name__ == "__main__":
     app.run(debug=True)

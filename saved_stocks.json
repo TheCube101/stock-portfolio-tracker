@@ -7,7 +7,7 @@
             "Total_Price": 125.1,
             "Currency_Name": "USD",
             "Currency_Symbol": "$",
-            "Buy_Date": "04-04-2025",
+            "Buy_Date": "04-04-25",
             "Amount": 2
         }
     ],
@@ -19,7 +19,31 @@
             "Total_Price": 617.55,
             "Currency_Name": "USD",
             "Currency_Symbol": "$",
-            "Buy_Date": "20-07-2024",
+            "Buy_Date": "20-07-24",
+            "Amount": 5
+        }
+    ],
+    "Saab AB (publ)": [
+        {
+            "Stock_Ticker": "SAAB-B.ST",
+            "Stock_Name": "Saab AB (publ)",
+            "Start_Stock_Price": "249.31",
+            "Total_Price": 1495.86,
+            "Currency_Name": "SEK",
+            "Currency_Symbol": "SEK",
+            "Buy_Date": "27-05-24",
+            "Amount": 6
+        }
+    ],
+    "Danske Bank A/S": [
+        {
+            "Stock_Ticker": "DANSKE.CO",
+            "Stock_Name": "Danske Bank A/S",
+            "Start_Stock_Price": "162.99",
+            "Total_Price": 814.95,
+            "Currency_Name": "DKK",
+            "Currency_Symbol": "kr",
+            "Buy_Date": "18-01-24",
             "Amount": 5
         }
     ]

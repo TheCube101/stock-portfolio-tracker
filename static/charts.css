@@ -131,12 +131,60 @@ a:hover {
     padding-top: 30px;
 }
 
-.remove, .sell {
+.tags {
+    display: flex;
+    align-items: center;  
+    flex-wrap: nowrap;
+    color: #aaaaaa;
+    font-size: small;
+    gap: 30px;
+    padding-top: 30px;
+    margin-bottom: -40px;
+}
+
+.stock-block {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+.options.action-row {
+    justify-content: space-between;
+    padding-top: 20px;
+    gap: 20px;
+}
+
+.tags > *, .options > * {
+    flex: 1;
+    text-align: center;
+}
+
+.options > div,
+.tags > h4 {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+}
+
+.sell {
     height: 40px;        
     padding: 0 10px;
     border-radius: 10px;
     background: #c83636aa;
     box-shadow: 8px 8px 9px #59262641, -8px -8px 9px #6d2e2e18;
+    display: flex;
+    align-items: center;    
+    justify-content: center;
+    transition: 0.4s;
+    flex-shrink: 0;
+}
+
+.remove {
+    height: 40px;        
+    padding: 0 10px;
+    border-radius: 10px;
+    background: #ffc400aa;
+    box-shadow: 8px 8px 9px #594b2641, -8px -8px 9px #6d5a2e18;
     display: flex;
     align-items: center;    
     justify-content: center;
